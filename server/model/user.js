@@ -12,10 +12,7 @@ class User {
     }
 
     read(key) {
-        return ref.child(key).once('value').then((user) => {
-                console.log('read user ' + key);
-                return user;
-            })
+        return ref.child(key).once('value').then((user) => user.val())
             .catch(error => console.log(error));
     }
 
