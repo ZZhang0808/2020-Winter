@@ -17,11 +17,8 @@ class Poll {
     }
 
     readAll() {
-        return ref.once('value').then((data) => {
-                console.log('read all polls');
-                return data;
-            })
-            .catch(error => console.log(error));
+        console.log('read all polls');
+        return ref.once('value');
     }
 
     update(key, data) {

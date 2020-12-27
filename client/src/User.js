@@ -10,6 +10,7 @@ class User extends Component {
       password: '',
       key: ''
     };
+    // used "bind(this)" so that these methods can access "this.state"
     this.setFirstName = this.setFirstName.bind(this);
     this.setLastName = this.setLastName.bind(this);
     this.setEmail = this.setEmail.bind(this);

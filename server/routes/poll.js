@@ -4,7 +4,7 @@ let Poll = require('../model/poll');
 
 router.get('/list', async(req, res) => {
     try {
-        Poll.readAll().then((user) => {console.log(user);res.status(200).json(user)});
+        Poll.readAll().then((user) => {res.status(200).json(user)});
     } catch (err) {
         res.status(400).json({
             message: "Some error occured",
@@ -29,7 +29,7 @@ router.post('/create', async(req, res) => {
 
 });
 
-router.get('/:key', async(req, res) => {
+router.get('/read/:key', async(req, res) => {
     try {
         Poll.read(req.params.key).then((user) => {console.log(user);res.status(200).json(user)});
     } catch (err) {
@@ -40,7 +40,7 @@ router.get('/:key', async(req, res) => {
     }
 });
 
-router.post('/:key', async(req, res) => {
+router.post('/update/:key', async(req, res) => {
     try {
         Poll.update(req.params.key, req.body.data);
         res.status(200);
@@ -53,7 +53,7 @@ router.post('/:key', async(req, res) => {
 
 });
 
-router.delete('/:key', async(req, res) => {
+router.delete('/delete/:key', async(req, res) => {
     try {
         Poll.delete(req.params.key);
         res.status(200);

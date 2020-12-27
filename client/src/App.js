@@ -6,13 +6,15 @@ import {
   Route
 } from 'react-router-dom';
 import User from './User';
+import Poll from './Poll';
 
 function App() {
   return(
     <Router>
       <div>
         <Switch>
-          <Route path="/" component={User} />
+          <Route exact path="/" component={User} />
+          <Route exact path="/poll" component={Poll} />
         </Switch>
       </div>
     </Router>
