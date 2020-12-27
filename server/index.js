@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const userRouter = require('./routes/user');
+const pollRouter = require('./routes/poll');
 
 const port = process.env.PORT || 8000;
 
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/user', userRouter);
+app.use('/poll', pollRouter);
 
 app.listen(port, function() {
     console.log('Server started on port ' + port);

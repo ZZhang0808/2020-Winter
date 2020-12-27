@@ -2,13 +2,16 @@ const db = require('../base');
 
 const ref = db.database().ref('USER');
 class User {
-    create(key, data) {
-        data.key = key;
-        ref.child(key).set(data).catch((error) => {
-            console.log(error);
+    create(data) {
+        return db.auth().createUserWithEmailAndPassword(data.email, data.password).then(() => {
+            console.log('sign up ' + db.auth().currentUser.uid);
+            data.key = db.auth().currentUser.uid;
+            ref.child(data.key).set(data).catch((error) => {
+                console.log(error);
+            });
+            console.log('creating user ' + data.key);
+            return data.key;
         });
-        console.log('creating user ' + key);
-        return key;
     }
 
     read(key) {
