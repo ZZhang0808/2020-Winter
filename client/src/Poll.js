@@ -1,37 +1,25 @@
 import React, { Component } from 'react';
 
-class Poll extends Component {
+
+class PollList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            key: this.props.match.params.key,
             name: '',
             description: '',
-            email: '',
-            password: '',
-            key: '',
-            polls: []
+            options: ''
         };
         this.setName = this.setName.bind(this);
         this.setDescription = this.setDescription.bind(this);
-        this.setEmail = this.setEmail.bind(this);
-        this.setPassword = this.setPassword.bind(this);
-        this.createPoll = this.createPoll.bind(this);
+        this.setOptions = this.setOptions.bind(this);
     }
 
     componentDidMount(){
-        fetch('http://localhost:8000/poll/list', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+        fetch('http://localhost:8000/poll/read/' + this.state.key, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
             .then(response => {
                 response.json().then(dataSnapshot => {
-                    var list = []
-                    var data = [];
-                    if (dataSnapshot != null) {
-                        data = Object.values(dataSnapshot);
-                    }
-                    data.forEach(childSnapshot => {
-                        console.log(childSnapshot)
-                        list.push(childSnapshot);
-                    });
-                    this.setState({polls: list});
+                    this.setState({name: dataSnapshot.name, description: dataSnapshot.description, options: dataSnapshot.options});
                 })
             });
 
@@ -45,8 +33,8 @@ class Poll extends Component {
         this.setState({ description: e.target.value })
     }
 
-    setEmail(e) {
-        this.setState({ email: e.target.value })
+    setOptions(data) {
+        this.setState({ options: data })
     }
 
     setPassword(e) {
@@ -57,8 +45,6 @@ class Poll extends Component {
         let data = {
             name: this.state.name,
             description: this.state.description,
-            email: this.state.email,
-            password: this.state.email
         };
         let config = {
             method: 'POST',
@@ -81,33 +67,12 @@ class Poll extends Component {
     }
 
     render() {
-        let list = this.state.polls.map(item =>
-            <tr>
-                <td>{item.name}</td>
-                <td><button onClick={this.deletePoll.bind(this, item.key)}>Delete</button></td>
-            </tr>);
         return <div>
-            <form onSubmit={() => this.createPoll}>
-                <label>Name
-          <input type='text' onChange={this.setName} />
-                </label>
-                <label>Description
-          <input type='text' onChange={this.setDescription} />
-                </label>
-                <label>Option 1
-          <input type='text' onChange={this.setEmail} />
-                </label>
-                <label>Option 2
-          <input type='text' onChange={this.setPassword} />
-                </label>
-                <button onClick={this.createPoll}>Submit</button>
-            </form>
-            <table>
-                {list}
-            </table>
+            <h3>{this.state.name}</h3>
+            <h5>{this.state.description}</h5>
         </div>
     }
 
 }
 
-export default Poll;
+export default PollList;

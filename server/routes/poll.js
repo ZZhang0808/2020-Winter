@@ -16,7 +16,10 @@ router.get('/list', async(req, res) => {
 router.post('/create', async(req, res) => {
     console.log('create called')
     try {
-        Poll.create(req.body).then((data) => {res.status(200).json({key: data}); console.log(data); return data;});
+        let key = Poll.create(req.body);
+        res.status(200).json({key: key});
+        console.log(data); 
+        return data;
     } catch (err) {
         console.log(err);
         res.status(400).json({

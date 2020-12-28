@@ -11,9 +11,8 @@ class Poll {
     }
 
     read(key) {
-        return ref.child(key).once('value').then((data) => {
-            console.log('read poll ' + key);
-            return data;})
+        console.log('read poll ' + key);
+        return ref.child(key).once('value');
     }
 
     readAll() {
